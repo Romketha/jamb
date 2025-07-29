@@ -744,16 +744,6 @@ function saveGameState() {
     expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
     
     document.cookie = `jambGameState=${JSON.stringify(stateToSave)}; expires=${expires.toUTCString()}; path=/`;
-    
-    // Show save indicator
-    const gameInfo = document.getElementById('gameInfo');
-    if (gameInfo) {
-        gameInfo.style.display = 'block';
-        gameInfo.innerHTML = '<p>💾 Igra je automatski spremljena!</p>';
-        setTimeout(() => {
-            gameInfo.innerHTML = '<p>🎯 Igra je automatski spremljena i bit će vraćena kada osvježite stranicu</p>';
-        }, 2000);
-    }
 }
 
 // Load game state from cookies
@@ -791,13 +781,6 @@ function loadGameState() {
                 }
                 
                 restoreTableFromState();
-                
-                // Show that game was loaded
-                const gameInfo = document.getElementById('gameInfo');
-                if (gameInfo && (Object.keys(gameState.scores.gd).length > 0 || gameState.rollCount > 0)) {
-                    gameInfo.style.display = 'block';
-                    gameInfo.innerHTML = '<p>📂 Prethodna igra je učitana iz cookies-a!</p>';
-                }
             }
         } catch (e) {
             console.log('Error loading game state:', e);

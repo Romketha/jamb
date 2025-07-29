@@ -720,18 +720,6 @@ h1 {
     75% { transform: translateX(5px); }
 }
 
-.game-info {
-    text-align: center;
-    margin: 20px 0;
-    padding: 15px;
-    background: linear-gradient(145deg, #d1ecf1, #bee5eb);
-    border-radius: 12px;
-    color: #0c5460;
-    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.2);
-    border: 1px solid rgba(23, 162, 184, 0.2);
-    font-size: 18px;
-}
-
 /* Smooth scrolling */
 html {
     scroll-behavior: smooth;
