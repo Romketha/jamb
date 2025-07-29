@@ -1,0 +1,810 @@
+@font-face {
+    font-family: 'NovecentoSansCondensed';
+    src: url('fonnts.com-Novecento_sans_condensed_Normal.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'NovecentoSansCondensed', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100dvh;
+    padding: clamp(10px, 2vw, 20px);
+    line-height: 1.4;
+}
+
+.container {
+    max-width: min(1400px, calc(100vw - 20px));
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    padding: clamp(15px, 3vw, 30px);
+    min-height: calc(100dvh - 20px);
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: clamp(20px, 4vw, 30px);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Dice section */
+.dice-section {
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    border-radius: 15px;
+    padding: clamp(15px, 3vw, 25px);
+    margin-bottom: clamp(20px, 4vw, 30px);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.dice-container {
+    display: flex;
+    justify-content: center;
+    gap: clamp(8px, 2vw, 15px);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.dice {
+    width: clamp(45px, 8vw, 60px);
+    height: clamp(45px, 8vw, 60px);
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border: 2px solid #34495e;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.dice:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    background: linear-gradient(145deg, #fff, #f8f8f8);
+}
+
+.dice.rolling {
+    animation: roll 0.5s ease-in-out;
+}
+
+@keyframes roll {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(180deg); }
+    75% { transform: rotate(270deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dice-controls {
+    text-align: center;
+}
+
+.keep-checkboxes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.keep-checkboxes label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.keep-checkboxes input[type="checkbox"] {
+    margin-bottom: 5px;
+    transform: scale(1.2);
+}
+
+#rollButton {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 35px);
+    border-radius: 25px;
+    font-size: clamp(20px, 4vw, 24px) !important;
+    font-weight: 600;
+    font-family: 'NovecentoSansCondensed', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+#rollButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+#rollButton:hover {
+    background: linear-gradient(145deg, #2980b9, #21618c);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+}
+
+#rollButton:hover::before {
+    left: 100%;
+}
+
+#rollButton:disabled {
+    background: linear-gradient(145deg, #95a5a6, #7f8c8d);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.roll-counter {
+    display: inline-block;
+    margin-left: 15px;
+    font-weight: 600;
+    color: #2c3e50;
+    background: rgba(52, 152, 219, 0.1);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: clamp(18px, 3vw, 22px);
+}
+
+.announce-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+
+.announce-section h3 {
+    margin-bottom: 10px;
+    color: #495057;
+    font-size: 20px;
+}
+
+.announce-section select {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.announce-section button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.announce-section button:hover {
+    background-color: #218838;
+}
+
+/* Pre-roll announce section */
+.pre-roll-announce {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e3f2fd;
+    border-radius: 8px;
+    border: 2px solid #2196f3;
+}
+
+.pre-roll-announce h3 {
+    margin-bottom: 15px;
+    color: #1976d2;
+    font-size: 20px;
+}
+
+.announce-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kontra-announce-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.kontra-announce-option label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.kontra-announce-option input[type="checkbox"] {
+    margin: 0;
+}
+
+.kontra-announce-option select {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 150px;
+    font-size: 16px;
+}
+
+.kontra-announce-option select:disabled {
+    background-color: #f5f5f5;
+    color: #999;
+}
+
+.kontra-announce-option.locked {
+    background-color: #fff3e0;
+    border-color: #ff9800;
+}
+
+.kontra-announce-option input[type="checkbox"]:disabled {
+    opacity: 0.6;
+}
+
+.kontra-announced {
+    background-color: #ff9800 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+/* Score table - sve ćelije su PRAVI KVADRATI width = height */
+.score-table {
+    overflow-x: auto;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#scoreTable {
+    width: auto;
+    min-width: fit-content;
+    border-collapse: separate;
+    border-spacing: 2px;
+    background-color: white;
+    table-layout: auto;
+}
+
+/* Header elementi - prvi stupac širi za nazive, ostali kvadratni */
+#scoreTable th:first-child {
+    width: 120px;
+    height: 60px;
+    min-width: 120px;
+    max-width: 120px;
+    background-color: #f8f9fa;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    font-size: 20px;
+    vertical-align: middle;
+    padding: 2px;
+    box-sizing: border-box;
+    display: table-cell;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Ostali header elementi - kvadratni width = height */
+#scoreTable th:not(:first-child) {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    background-color: #f8f9fa;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    font-size: 20px;
+    vertical-align: middle;
+    padding: 2px;
+    box-sizing: border-box;
+    display: table-cell;
+}
+
+/* TD elementi - prvi stupac širi za nazive, ostali kvadratni width = height */
+#scoreTable td:first-child {
+    width: 120px;
+    height: 60px;
+    min-width: 120px;
+    max-width: 120px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+    font-size: 20px;
+    padding: 2px;
+    vertical-align: middle;
+    background-color: white;
+    border-radius: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+    display: table-cell;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Ostali TD elementi - kvadratni width = height */
+#scoreTable td:not(:first-child) {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+    font-size: 20px;
+    padding: 2px;
+    vertical-align: middle;
+    background-color: white;
+    border-radius: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+    display: table-cell;
+}
+
+/* Sve ćelije za unos brojeva su PRAVI KVADRATI */
+.cell, .sum-cell, .total-cell, .grand-total-cell {
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    max-width: 60px !important;
+    min-height: 60px !important;
+    max-height: 60px !important;
+    border-radius: 12px;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 2px;
+    font-size: 20px;
+}
+
+.cell:hover, .sum-cell:hover, .total-cell:hover {
+    background-color: #e9ecef;
+}
+
+/* Responsive - smanji kvadrate na manjim ekranima ALI OSTAJU width = height */
+@media (max-width: 768px) {
+    #scoreTable th:first-child, #scoreTable td:first-child {
+        width: 80px !important;
+        height: 45px !important;
+        min-width: 80px !important;
+        max-width: 80px !important;
+        min-height: 45px !important;
+        max-height: 45px !important;
+        font-size: 18px;
+        padding: 1px;
+    }
+    
+    #scoreTable th:not(:first-child), #scoreTable td:not(:first-child), .cell, .sum-cell, .total-cell, .grand-total-cell {
+        width: 45px !important;
+        height: 45px !important;
+        min-width: 45px !important;
+        max-width: 45px !important;
+        min-height: 45px !important;
+        max-height: 45px !important;
+        font-size: 18px;
+        padding: 1px;
+    }
+}
+
+@media (max-width: 480px) {
+    #scoreTable th:first-child, #scoreTable td:first-child {
+        width: 90px !important;
+        height: 50px !important;
+        min-width: 90px !important;
+        max-width: 90px !important;
+        min-height: 50px !important;
+        max-height: 50px !important;
+        font-size: 18px;
+        padding: 1px;
+    }
+    
+    #scoreTable th:not(:first-child), #scoreTable td:not(:first-child), .cell, .sum-cell, .total-cell, .grand-total-cell {
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        min-height: 50px !important;
+        max-height: 50px !important;
+        font-size: 18px;
+        padding: 1px;
+    }
+}
+
+.sum-cell, .total-cell {
+    font-weight: bold;
+}
+
+.round-counter {
+    font-size: clamp(20px, 4vw, 24px);
+    font-weight: 600;
+    color: #2c3e50;
+    margin-top: 8px;
+    background: rgba(46, 204, 113, 0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* Game controls */
+.game-controls {
+    text-align: center;
+    margin-top: auto;
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.game-controls button {
+    background: linear-gradient(145deg, #34495e, #2c3e50);
+    color: white;
+    border: none;
+    padding: clamp(12px, 2vw, 15px) clamp(20px, 4vw, 25px);
+    border-radius: 25px;
+    font-size: clamp(20px, 4vw, 24px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(52, 73, 94, 0.3);
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
+    font-family: 'NovecentoSansCondensed', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.game-controls button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.game-controls button:hover {
+    background: linear-gradient(145deg, #2c3e50, #1a252f);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(52, 73, 94, 0.5);
+}
+
+.game-controls button:hover::before {
+    left: 100%;
+}
+
+.game-controls button[style*="background-color: #dc3545"] {
+    background: linear-gradient(145deg, #e74c3c, #c0392b) !important;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.game-controls button[style*="background-color: #dc3545"]:hover {
+    background: linear-gradient(145deg, #c0392b, #a93226) !important;
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 8px;
+    }
+    
+    .container {
+        padding: 15px;
+        border-radius: 15px;
+        min-height: calc(100dvh - 16px);
+    }
+    
+    h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        margin-bottom: 20px;
+    }
+    
+    .dice-section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .dice-container {
+        gap: 8px;
+        justify-content: space-evenly;
+    }
+    
+    .dice {
+        width: clamp(40px, 12vw, 50px);
+        height: clamp(40px, 12vw, 50px);
+        font-size: clamp(16px, 5vw, 20px);
+        border-radius: 8px;
+    }
+    
+    .keep-checkboxes {
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .keep-checkboxes label {
+        font-size: 14px;
+    }
+    
+    .dice-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+    
+    .score-table {
+        margin-bottom: 15px;
+    }
+    
+    .pre-roll-announce,
+    .announce-section {
+        padding: 10px;
+        border-radius: 8px;
+    }
+    
+    .kontra-announce-option {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .kontra-announce-option select {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .game-controls {
+        margin-top: 15px;
+        gap: 10px;
+    }
+    
+    .game-controls button {
+        min-width: 100px;
+        padding: 10px 15px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 8px;
+        border-radius: 12px;
+    }
+    
+    .score-table {
+        overflow-x: auto;
+        margin-bottom: 15px;
+        width: 100%;
+        padding: 0 5px;
+    }
+    
+    #scoreTable {
+        width: 100%;
+        min-width: fit-content;
+        border-spacing: 3px;
+    }
+    
+    .dice-container {
+        gap: 6px;
+    }
+    
+    .dice {
+        width: clamp(35px, 15vw, 45px);
+        height: clamp(35px, 15vw, 45px);
+        font-size: clamp(14px, 6vw, 18px);
+    }
+    
+    .roll-counter, .round-counter {
+        display: block;
+        margin: 8px auto;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .game-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .game-controls button {
+        min-width: auto;
+        width: 100%;
+        margin: 0;
+        font-size: 20px;
+    }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        padding: 5px;
+    }
+    
+    .container {
+        padding: 10px;
+        min-height: calc(100dvh - 10px);
+    }
+    
+    h1 {
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+    
+    .dice-section {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .dice {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .score-table {
+        margin-bottom: 10px;
+    }
+    
+    .game-controls {
+        margin-top: 10px;
+    }
+}
+
+/* Additional visual enhancements */
+.dice.kept {
+    background: linear-gradient(145deg, #f39c12, #e67e22) !important;
+    border-color: #d68910;
+    color: white;
+    box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.3);
+}
+
+.highlight-column {
+    background: linear-gradient(145deg, #fff3cd, #ffeaa7) !important;
+    box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.5);
+}
+
+.invalid-move {
+    background: linear-gradient(145deg, #f8d7da, #f5c6cb) !important;
+    color: #721c24 !important;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.3);
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.game-info {
+    text-align: center;
+    margin: 20px 0;
+    padding: 15px;
+    background: linear-gradient(145deg, #d1ecf1, #bee5eb);
+    border-radius: 12px;
+    color: #0c5460;
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.2);
+    border: 1px solid rgba(23, 162, 184, 0.2);
+    font-size: 18px;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(145deg, #888, #666);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(145deg, #666, #444);
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Focus states for accessibility */
+.cell:focus,
+button:focus,
+select:focus,
+input:focus {
+    outline: 3px solid rgba(52, 152, 219, 0.5);
+    outline-offset: 2px;
+}
+
+/* Improved select and input styling */
+select, input[type="checkbox"] {
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Enhanced checkbox styling */
+input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #3498db;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    border-color: #2980b9;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}

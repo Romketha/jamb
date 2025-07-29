@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamb Listić</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Jamb Listić</h1>
+        
+        <div class="game-info" id="gameInfo" style="display: none;">
+            <p>🎯 Igra je automatski spremljena i bit će vraćena kada osvježite stranicu</p>
+        </div>
+        
+        <!-- Dice rolling section -->
+        <div class="dice-section">
+            <div class="dice-container">
+                <div class="dice" id="dice1">1</div>
+                <div class="dice" id="dice2">2</div>
+                <div class="dice" id="dice3">3</div>
+                <div class="dice" id="dice4">4</div>
+                <div class="dice" id="dice5">5</div>
+            </div>
+            
+            <div class="dice-controls">
+                <div class="keep-checkboxes">
+                    <label><input type="checkbox" id="keep1"> Zadrži</label>
+                    <label><input type="checkbox" id="keep2"> Zadrži</label>
+                    <label><input type="checkbox" id="keep3"> Zadrži</label>
+                    <label><input type="checkbox" id="keep4"> Zadrži</label>
+                    <label><input type="checkbox" id="keep5"> Zadrži</label>
+                </div>
+                
+                <div class="pre-roll-announce" id="preRollAnnounce">
+                    <h3>Prije prvog bacanja:</h3>
+                    <div class="kontra-announce-option">
+                        <label>
+                            <input type="checkbox" id="kontraCheckbox"> 
+                            Kontra najava:
+                        </label>
+                        <select id="kontraSelect" disabled>
+                            <option value="">Odaberi što kontrirate</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="max">Maximum</option>
+                            <option value="min">Minimum</option>
+                            <option value="tris">Tris</option>
+                            <option value="dva-para">Dva para</option>
+                            <option value="skala">Skala</option>
+                            <option value="full">Full</option>
+                            <option value="poker">Poker</option>
+                            <option value="jamb">Jamb</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button id="rollButton" onclick="rollDice()">Baci kockice</button>
+                <div class="roll-counter">Bacanje: <span id="rollCount">0</span>/3</div>
+                <div class="round-counter">Runda: <span id="roundCount">1</span></div>
+                
+                <div class="announce-section" id="announceSection" style="display: none;">
+                    <h3>Najava (nakon prvog bacanja):</h3>
+                    <select id="announceSelect">
+                        <option value="">Odaberi najavu</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="max">Maximum</option>
+                        <option value="min">Minimum</option>
+                        <option value="tris">Tris</option>
+                        <option value="dva-para">Dva para</option>
+                        <option value="skala">Skala</option>
+                        <option value="full">Full</option>
+                        <option value="poker">Poker</option>
+                        <option value="jamb">Jamb</option>
+                    </select>
+                    <button onclick="makeAnnounce()">Najaviti</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Score table -->
+        <div class="score-table">
+            <table id="scoreTable">
+                <thead>
+                    <tr>
+                        <th>KOMBINACIJA</th>
+                        <th>↓</th>
+                        <th>↑</th>
+                        <th>↓↑</th>
+                        <th>NAJAVA</th>
+                        <th>KONTRA NAJAVA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Gornji dio -->
+                    <tr>
+                        <td>1</td>
+                        <td class="cell" data-row="1" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="1" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="1" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="1" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="1" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="cell" data-row="2" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="2" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="2" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="2" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="2" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="cell" data-row="3" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="3" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="3" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="3" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="3" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td class="cell" data-row="4" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="4" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="4" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="4" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="4" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td class="cell" data-row="5" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="5" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="5" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="5" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="5" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td class="cell" data-row="6" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="6" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="6" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="6" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="6" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr class="sum-row">
+                        <td><strong>ZBROJ</strong><br>
+                        <strong>(+30 AKO ≥60)</strong></td>
+                        <td class="sum-cell" id="sum1-gd">0</td>
+                        <td class="sum-cell" id="sum1-dg">0</td>
+                        <td class="sum-cell" id="sum1-sl">0</td>
+                        <td class="sum-cell" id="sum1-na">0</td>
+                        <td class="sum-cell" id="sum1-kn">0</td>
+                    </tr>
+
+                    <!-- Srednji dio -->
+                    <tr>
+                        <td>MAXIMUM</td>
+                        <td class="cell" data-row="max" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="max" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="max" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="max" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="max" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>MINIMUM</td>
+                        <td class="cell" data-row="min" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="min" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="min" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="min" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="min" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr class="sum-row">
+                        <td><strong>RAZLIKA</strong><br>
+                            <strong>(MAX-MIN)</strong></td>
+                        <td class="sum-cell" id="sum2-gd">0</td>
+                        <td class="sum-cell" id="sum2-dg">0</td>
+                        <td class="sum-cell" id="sum2-sl">0</td>
+                        <td class="sum-cell" id="sum2-na">0</td>
+                        <td class="sum-cell" id="sum2-kn">0</td>
+                    </tr>
+
+                    <!-- Donji dio -->
+                    <tr>
+                        <td>TRIS (+10)</td>
+                        <td class="cell" data-row="tris" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="tris" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="tris" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="tris" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="tris" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>DVA PARA (+20)</td>
+                        <td class="cell" data-row="dva-para" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="dva-para" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="dva-para" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="dva-para" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="dva-para" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>SKALA (35/45)</td>
+                        <td class="cell" data-row="skala" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="skala" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="skala" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="skala" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="skala" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>FULL (+30)</td>
+                        <td class="cell" data-row="full" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="full" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="full" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="full" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="full" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>POKER (+40)</td>
+                        <td class="cell" data-row="poker" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="poker" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="poker" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="poker" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="poker" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr>
+                        <td>JAMB (+50)</td>
+                        <td class="cell" data-row="jamb" data-col="gd" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="jamb" data-col="dg" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="jamb" data-col="sl" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="jamb" data-col="na" onclick="selectCell(this)"></td>
+                        <td class="cell" data-row="jamb" data-col="kn" onclick="selectCell(this)"></td>
+                    </tr>
+                    <tr class="sum-row">
+                        <td><strong>ZBROJ</strong></td>
+                        <td class="sum-cell" id="sum3-gd">0</td>
+                        <td class="sum-cell" id="sum3-dg">0</td>
+                        <td class="sum-cell" id="sum3-sl">0</td>
+                        <td class="sum-cell" id="sum3-na">0</td>
+                        <td class="sum-cell" id="sum3-kn">0</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>UKUPNO</strong></td>
+                        <td class="total-cell" id="total-gd">0</td>
+                        <td class="total-cell" id="total-dg">0</td>
+                        <td class="total-cell" id="total-sl">0</td>
+                        <td class="total-cell" id="total-na">0</td>
+                        <td class="total-cell" id="total-kn">0</td>
+                    </tr>
+                    <tr class="grand-total-row">
+                        <td><strong>UKUPNO SVE</strong></td>
+                        <td colspan="5" class="grand-total-cell" id="grandTotal">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="game-controls">
+            <button onclick="resetGame()">Nova igra</button>
+            <button onclick="resetRoll()">Resetiraj bacanje</button>
+            <button onclick="clearGameState(); location.reload();" style="background-color: #dc3545;">Obriši spremljeno</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
