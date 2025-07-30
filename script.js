@@ -796,17 +796,8 @@ function restoreTableFromState() {
             if (cell) {
                 const score = gameState.scores[col][row];
                 
-                // Check if this is a bonus combination
-                let displayText = score.toString();
-                if (['tris', 'dva-para', 'full', 'poker', 'jamb'].includes(row) && score > 0) {
-                    const baseScore = calculateScore(row); // This would need the original dice, so we'll estimate
-                    const bonus = getBonusPoints(row, baseScore);
-                    if (bonus > 0 && score > baseScore) {
-                        displayText = `${score - bonus}+${bonus}`;
-                    }
-                }
-                
-                cell.textContent = displayText;
+                // Display only the final score
+                cell.textContent = score.toString();
                 cell.classList.add('filled');
                 cell.style.fontWeight = 'bold';
                 cell.style.backgroundColor = '#28a745';

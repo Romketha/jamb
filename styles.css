@@ -428,26 +428,75 @@ h1 {
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 8px;
+        border-radius: 12px;
+    }
+    
+    .score-table {
+        overflow-x: hidden;
+        margin-bottom: 15px;
+        width: 100%;
+        padding: 0;
+    }
+    
+    #scoreTable {
+        width: 100%;
+        min-width: 100%;
+        border-spacing: 2px;
+        table-layout: fixed;
+    }
+    
     #scoreTable th:first-child, #scoreTable td:first-child {
-        width: 90px !important;
-        height: 50px !important;
-        min-width: 90px !important;
-        max-width: 90px !important;
-        min-height: 50px !important;
-        max-height: 50px !important;
-        font-size: 18px;
+        width: 28.6% !important;
+        height: 14.3vw !important;
+        min-width: 28.6% !important;
+        max-width: 28.6% !important;
+        min-height: 14.3vw !important;
+        max-height: 14.3vw !important;
+        font-size: 4vw;
         padding: 1px;
     }
     
     #scoreTable th:not(:first-child), #scoreTable td:not(:first-child), .cell, .sum-cell, .total-cell, .grand-total-cell {
-        width: 50px !important;
-        height: 50px !important;
-        min-width: 50px !important;
-        max-width: 50px !important;
-        min-height: 50px !important;
-        max-height: 50px !important;
-        font-size: 18px;
+        width: 14.3% !important;
+        height: 14.3vw !important;
+        min-width: 14.3% !important;
+        max-width: 14.3% !important;
+        min-height: 14.3vw !important;
+        max-height: 14.3vw !important;
+        font-size: 4vw;
         padding: 1px;
+    }
+    
+    .dice-container {
+        gap: 6px;
+    }
+    
+    .dice {
+        width: clamp(35px, 15vw, 45px);
+        height: clamp(35px, 15vw, 45px);
+        font-size: clamp(14px, 6vw, 18px);
+    }
+    
+    .roll-counter, .round-counter {
+        display: block;
+        margin: 8px auto;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .game-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .game-controls button {
+        min-width: auto;
+        width: 100%;
+        margin: 0;
+        font-size: 20px;
     }
 }
 
@@ -615,16 +664,17 @@ h1 {
     }
     
     .score-table {
-        overflow-x: auto;
+        overflow-x: hidden;
         margin-bottom: 15px;
         width: 100%;
-        padding: 0 5px;
+        padding: 0;
     }
     
     #scoreTable {
         width: 100%;
-        min-width: fit-content;
-        border-spacing: 3px;
+        min-width: 100%;
+        border-spacing: 2px;
+        table-layout: fixed;
     }
     
     .dice-container {
